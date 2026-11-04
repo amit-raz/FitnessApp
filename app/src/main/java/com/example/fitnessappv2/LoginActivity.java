@@ -1,4 +1,4 @@
-package com.example.fitnessappv2; // וודא ששם החבילה תואם לפרויקט שלך
+package com.example.fitnessappv2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,48 +11,79 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // הגדרת משתנים לרכיבי ה-UI
     private EditText etEmail, etPassword;
     private Button btnLogin;
     private TextView tvSignUp;
+
+    private String registeredUsername = "";
+    private String registeredPassword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // דרישה 3: מציאת הרכיבים לפי המזהים שלהם (IDs)
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvSignUp = findViewById(R.id.tvSignUp);
 
-        // דרישה 4: חיבור מאזין ללחיצה על כפתור ההתחברות (Sign in)
+        // קריאת הפרטים שהגיעו מ-RegisterActivity
+        Intent intent = getIntent();
+        if (intent != null) {
+            String userExtra = intent.getStringExtra("username");
+            String passExtra = intent.getStringExtra("password");
+
+            // בדיקה שהפרטים שהגיעו אינם null ואינם ריקים
+            if (userExtra != null && !userExtra.isEmpty()) {
+                registeredUsername = userExtra;
+            }
+            if (passExtra != null && !passExtra.isEmpty()) {
+                registeredPassword = passExtra;
+            }
+        }
+
+        // בדיקה בלחיצה על כפתור הכניסה
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // דרישה 5: קריאת ערכי השדות וניקוי רווחים מיותרים
-                String email = etEmail.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
+                String inputEmail = etEmail.getText().toString().trim();
+                String inputPassword = etPassword.getText().toString().trim();
 
-                // בדיקה אם אחד השדות ריק
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                // בדיקת שדות ריקים
+                if (inputEmail.isEmpty()) {
+                    etEmail.setError("Please enter your username/email");
+                    return;
+                }
+                if (inputPassword.isEmpty()) {
+                    etPassword.setError("Please enter your password");
+                    return;
+                }
+
+                // בדיקה אם המשתמש נרשם מראש
+                if (registeredUsername.isEmpty() || registeredPassword.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "No registered account found. Please sign up first.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // השוואת הקלט לפרטים שנרשמו באמצעות equals()
+                if (inputEmail.equals(registeredUsername) && inputPassword.equals(registeredPassword)) {
+                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    // כאן ניתן לעבור למסך הראשי בעתיד (MainActivity)
                 } else {
-                    Toast.makeText(LoginActivity.this, "Logging in...", Toast.LENGTH_SHORT).show();
-                    // כאן בהמשך תבוא לוגיקת האימות (Authentication)
+                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        /* דרישה 6: חיבור מאזין ללחיצה על טקסט ההרשמה למעבר ל-RegisterActivity וסגירת המסך
+        // מעבר למסך ההרשמה
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-                finish(); // סגירת המסך הנוכחי
+                Intent intentSignUp = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intentSignUp);
+                finish();
             }
-        }); */
+        });
     }
 }
