@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // בלחיצה על "Already have an account? Sign In" – חוזרים למסך התחברות
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

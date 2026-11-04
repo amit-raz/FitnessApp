@@ -41,7 +41,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- שדה שם משתמש -->
             <EditText
                 android:id="@+id/etRegisterUsername"
                 android:layout_width="0dp"
@@ -58,7 +57,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle" />
 
-            <!-- שדה סיסמה -->
             <EditText
                 android:id="@+id/etRegisterPassword"
                 android:layout_width="0dp"
@@ -75,7 +73,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etRegisterUsername" />
 
-            <!-- שדה אימות סיסמה -->
             <EditText
                 android:id="@+id/etRegisterConfirmPassword"
                 android:layout_width="0dp"
@@ -92,7 +89,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etRegisterPassword" />
 
-            <!-- כפתור הרשמה -->
             <Button
                 android:id="@+id/btnRegister"
                 android:layout_width="0dp"
@@ -109,7 +105,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etRegisterConfirmPassword" />
 
-            <!-- קישור חזרה למסך התחברות -->
             <TextView
                 android:id="@+id/tvSignIn"
                 android:layout_width="wrap_content"
